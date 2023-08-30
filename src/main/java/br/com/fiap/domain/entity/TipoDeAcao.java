@@ -1,20 +1,20 @@
 package br.com.fiap.domain.entity;
 
 import jakarta.persistence.*;
+import org.checkerframework.checker.units.qual.C;
 
 @Entity
-@Table(name = "TB_TPACAO", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NM_TPACAO"}, name = "NM_TPACAO")
+@Table(name = "TB_TIPO_ACAO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NM_TIPO_ACAO", columnNames = "NM_TIPO_ACAO")
 })
 public class TipoDeAcao {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TPACAO")
-    @SequenceGenerator(name = "SQ_TPACAO", sequenceName = "SQ_TPACAO")
-    @Column(name = "ID_TPACAO")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_ACAO")
+    @SequenceGenerator(name = "SQ_TIPO_ACAO", sequenceName = "SQ_TIPO_ACAO")
+    @Column(name = "ID_TIPO_ACAO")
     private Long id;
 
-    @Column(name = "NM_TPACAO", nullable = false)
+    @Column(name = "NM_TIPO_ACAO", nullable = false)
     private String nome;
 
     public TipoDeAcao() {
@@ -24,6 +24,7 @@ public class TipoDeAcao {
         this.id = id;
         this.nome = nome;
     }
+
 
     public Long getId() {
         return id;

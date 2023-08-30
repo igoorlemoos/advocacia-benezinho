@@ -9,7 +9,7 @@
             <property name="jakarta.persistence.jdbc.user" value="RM97012"/>
             <property name="jakarta.persistence.jdbc.password" value="201296"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="CREATE"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>

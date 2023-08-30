@@ -4,26 +4,25 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_ADVOGADO", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "NM_OAB_ADVOGADO", name = "NM_OAB_ADVOGADO")
+        @UniqueConstraint(name = "UK_ADVG_OAB", columnNames = "NR_OAB")
+
 })
 public class Advogado {
-
     @Id
+    @Column(name = "ID_ADVOGADO")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ADVOGADO")
     @SequenceGenerator(name = "SQ_ADVOGADO", sequenceName = "SQ_ADVOGADO")
-    @Column(name = "ID_ADVOGADO")
     private Long id;
 
     @Column(name = "NM_ADVOGADO")
     private String nome;
 
-    @Column(name = "NM_OAB_ADVOGADO", nullable = false)
+    @Column(name = "NR_OAB", nullable = false)
     private String numeroOAB;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "ID_ESTADO",
-        referencedColumnName = "ID_ESTADO",
-        foreignKey = @ForeignKey(name = "FK_ESTD_ADVOGADO"))
+    @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID_ESTADO",
+            foreignKey = @ForeignKey(name = "FK_ADVOGADO_ESTADO"))
     private Estado estado;
 
     public Advogado() {

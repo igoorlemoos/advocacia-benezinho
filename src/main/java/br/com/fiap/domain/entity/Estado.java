@@ -1,13 +1,14 @@
 package br.com.fiap.domain.entity;
 
 import jakarta.persistence.*;
-import org.checkerframework.checker.units.qual.C;
 
 @Entity
 @Table(name = "TB_ESTADO", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NM_ESTADO", "SIG_ESTADO"}, name = "UK_TB_ESTADO_ESTADO_SIGLA")
+        @UniqueConstraint(name = "UK_NM_ESTADO", columnNames = "NM_ESTADO"),
+        @UniqueConstraint(name = "UK_SIGLA_ESTADO", columnNames = "SIGLA_ESTADO")
 })
 public class Estado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ESTADO")
     @SequenceGenerator(name = "SQ_ESTADO", sequenceName = "SQ_ESTADO")
@@ -17,7 +18,7 @@ public class Estado {
     @Column(name = "NM_ESTADO")
     private String nome;
 
-    @Column(name = "SIG_ESTADO")
+    @Column(name = "SIGLA_ESTADO")
     private String sigla;
 
     public Estado() {

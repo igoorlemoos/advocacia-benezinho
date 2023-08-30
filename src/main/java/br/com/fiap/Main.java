@@ -8,43 +8,42 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import javax.swing.*;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-
-        Estado estado = new Estado();
-        estado.setNome("São Paulo").setSigla("SP");
-
-        TipoDeAcao tpAcao = new TipoDeAcao();
-        tpAcao.setNome("Ação Ordinária");
-
-        Advogado adv = new Advogado();
-        adv.setNome("Igor").setEstado(estado).setNumeroOAB("UF999999");
-
-        Processo processo = new Processo();
-        processo.setAdvogado(adv).setNumero("1").setProBono(true).setTipoDeAcao(tpAcao);
-
-
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("oracle");
         EntityManager manager = factory.createEntityManager();
 
-        manager.getTransaction().begin();
+//        salvarProcesso(manager);
 
-        manager.persist(estado);
-        manager.persist(tpAcao);
-        manager.persist(adv);
-        manager.persist(processo);
+        // Atalho Eclipse ALT SHIFT M para transformar em um metodo
+//        findById(manager);
 
-        manager.getTransaction().commit();
+        List<Processo> list = manager.createQuery("SELECT p FROM Processo p").getResultList();
+        list.forEach(System.out::println);
 
-
-//        Processo consultaProcesso = consultaProcesso(1L, manager);
-//        System.out.println("Consulta processo: " + consultaProcesso);
 
         manager.close();
         factory.close();
     }
 
-    public static Processo consultaProcesso (Long id_processo, EntityManager manager) {
-        return manager.find(Processo.class, id_processo);
+
+    private static void salvarProcesso(EntityManager manager) {
+        TipoDeAcao tipoAcao = new TipoDeAcao(null, "Tipo");
+        Estado estado = new Estado(null, "São Paulo", "SP");
+        Advogado advogado = new Advogado(null, "Nome", "NumeroOAB", estado);
+        Processo processo = new Processo(null, "123456", true, advogado, tipoAcao);
+
+        manager.getTransaction().begin();
+        manager.persist(processo);
+        manager.getTransaction().commit();
+    }
+
+    private static void findById(EntityManager manager) {
+        Long id = Long.valueOf(JOptionPane.showInputDialog("Informe o ID do processo: "));
+        Processo processo1 = manager.find(Processo.class, id);
+        System.out.println(processo1);
     }
 }

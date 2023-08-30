@@ -4,31 +4,30 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_PROCESSO", uniqueConstraints = {
-    @UniqueConstraint(name = "UK_NR_PROCESSO", columnNames = "NR_PROCESSO")
+        @UniqueConstraint(name = "UK_NR_PROCESSO", columnNames = "NR_PROCESSO")
 })
 public class Processo {
     @Id
+    @Column(name = "ID_PROCESSO")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PROCESSO")
     @SequenceGenerator(name = "SQ_PROCESSO", sequenceName = "SQ_PROCESSO")
-    @Column(name = "ID_PROCESSO")
     private Long id;
 
     @Column(name = "NR_PROCESSO", nullable = false)
     private String numero;
 
-    @Column(name = "PB_PROCESSO")
+    @Column(name = "PRO_BONO_PROCESSO")
     private Boolean proBono;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "ID_ADVOGADO",
-            referencedColumnName = "ID_ADVOGADO",
-            foreignKey = @ForeignKey(name = "FK_PROC_ADVGD"))
+    @JoinColumn(name = "ID_ADVOGADO", referencedColumnName = "ID_ADVOGADO",
+            foreignKey = @ForeignKey(name = "FK_PROCESSO_ADVOGADO"))
     private Advogado advogado;
 
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "ID_TPACAO",
-            referencedColumnName = "ID_TPACAO",
-            foreignKey = @ForeignKey(name = "FK_TPACAO_PROCESSO"))
+    @JoinColumn(name = "ID_TIPO_ACAO", referencedColumnName = "ID_TIPO_ACAO",
+            foreignKey = @ForeignKey(name = "FK_PROCESSO_TP_ACAO"))
     private TipoDeAcao tipoDeAcao;
 
 
